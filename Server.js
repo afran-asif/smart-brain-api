@@ -10,15 +10,19 @@ const profile = require('./Controllers/profile');
 const image =require('./Controllers/image');
 const PORT = process.env.PORT;
 const db = knex({
-    client:'pg',
+    client: 'pg',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
+        ssl: {
+        rejectUnauthorized: false
+        }
     }
-})
+});
+
+
 
 const app = express();
-
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
