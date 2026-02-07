@@ -9,8 +9,8 @@ const handleApiCall = (req, res) => {
     stub.PostModelOutputs(
     {
         user_app_id: {
-            user_id: process.env.CLARIFAI_USER_ID ,
-            app_id: process.env.CLARIFAI_APP_ID
+            user_id: 'clarifai' ,
+            app_id: 'main'
         },
         model_id: "face-detection",
         inputs: [{data: {image: {url: req.body.input}}}]
