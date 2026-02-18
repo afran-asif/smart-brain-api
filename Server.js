@@ -8,7 +8,9 @@ const signin = require('./Controllers/signin');
 const register = require('./Controllers/register');
 const profile = require('./Controllers/profile');
 const image =require('./Controllers/image');
+const jwt =require('jsonwebtoken')
 const PORT = process.env.PORT;
+const { requireAuth }= require('./MIddleware/auth')
 const db = knex({
     client: 'pg',
     connection: {
@@ -58,9 +60,9 @@ app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcry
     
 app.get('/profile/:id',(req, res) => { profile.handleProfile(req, res, db)})
 
-app.put('/image', (req, res) => { image.handleImage(req, res, db)})
+app.put('/image', requireAuth, (req, res) => { image.handleImage(req, res, db)})
 
-app.post('/imageUrl', (req, res) => { image.handleApiCall(req, res)})
+app.post('/imageUrl', requireAuth, (req, res) => { image.handleApiCall(req, res)})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

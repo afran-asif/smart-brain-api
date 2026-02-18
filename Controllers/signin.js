@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const handleSignin = ( req , res, db, bcrypt) => {
     const {email,password} = req.body;
     if( !email || !password ){
@@ -10,7 +12,11 @@ const handleSignin = ( req , res, db, bcrypt) => {
             return db.select('*').from('users')
             .where( 'email' , '=' , email )
             .then ( user =>{
-                res.json(user[0]);
+                const token = jwt.sign({id : user[0].id}, SECRET_KEY ,({ expiresIn: '1h'}))
+                res.json({
+                    user: user[0],
+                    toen: token
+                });
             })
             .catch(err => res.status(400).json('unable to get user'))
         }else{
