@@ -12,10 +12,10 @@ const handleSignin = ( req , res, db, bcrypt) => {
             return db.select('*').from('users')
             .where( 'email' , '=' , email )
             .then ( user =>{
-                const token = jwt.sign({id : user[0].id}, SECRET_KEY ,({ expiresIn: '1h'}))
+                const token = jwt.sign({id : user[0].id}, process.env.JWT_SECRET ,({ expiresIn: '1h'}))
                 res.json({
                     user: user[0],
-                    toen: token
+                    token: token
                 });
             })
             .catch(err => res.status(400).json('unable to get user'))
