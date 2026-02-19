@@ -8,7 +8,7 @@ const signin = require('./Controllers/signin');
 const register = require('./Controllers/register');
 const profile = require('./Controllers/profile');
 const image =require('./Controllers/image');
-const jwt =require('jsonwebtoken')
+
 const PORT = process.env.PORT;
 const { requireAuth }= require('./MIddleware/auth')
 const db = knex({
@@ -20,8 +20,6 @@ const db = knex({
         }
     }
 });
-
-
 
 const app = express();
 app.use(express.json());
@@ -51,7 +49,7 @@ const database = {
 
 
 app.get('/', (req, res) => {
-    res.send(database.users)
+    res.send('server running...')
 })
 
 app.post('/signin', (req,res) => { signin.handleSignin(req,res,db,bcrypt)})
